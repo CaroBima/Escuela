@@ -5,7 +5,10 @@
  */
 package Igu;
 
+import Logica.Controladora;
+import java.time.LocalDate;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +22,8 @@ public class AlumnoForm extends javax.swing.JFrame {
     public AlumnoForm() {
         this.setTitle("Escuela");
         initComponents();
+        jDateFechaNac.setDate(new Date());
+        //jDateFechaNac.setDate(LocalDate.now());
         
     }
 
@@ -69,6 +74,11 @@ public class AlumnoForm extends javax.swing.JFrame {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
@@ -175,12 +185,31 @@ public class AlumnoForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        this.limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+      Controladora control = new Controladora();
+      String dni, nombre, apellido;
+      Date fechaNac;
+           
+      dni = txtDni.getText();
+      nombre = txtNombre.getText();
+      apellido = txtApellido.getText();
+      fechaNac = jDateFechaNac.getDate();
+      control.agregarAlumno(dni, nombre, apellido, fechaNac);
+      this.limpiar();
+      JOptionPane.showMessageDialog(null, "Alumno Guardado");
+      
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void limpiar(){
         txtDni.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
         jDateFechaNac.setDate(new Date());
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
+        //jDateFechaNac.setDate(LocalDate.now());
+    }
     /**
      * @param args the command line arguments
      */

@@ -3,6 +3,8 @@ package Persistencia;
 
 import Logica.Alumno;
 import Persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,5 +49,11 @@ public class ControladoraPersistencia {
         alum = aluJPA.findAlumno(id);
         System.out.println("Alumno dni: " + alum.getDni() + ", " + alum.getNombre() + " " + alum.getApellido() + " ");
     
+    }
+    
+    public List leerTodosLosAlumnos(){
+        List <Alumno> listaPersona = new ArrayList<Alumno>();
+        listaPersona = aluJPA.findAlumnoEntities();
+        return listaPersona;
     }
 }

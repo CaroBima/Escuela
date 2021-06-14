@@ -1,8 +1,8 @@
 
 package Logica;
 import Igu.AlumnoForm;
-import Persistencia.ControladoraPersistencia;
-import java.util.Date;
+//import Persistencia.ControladoraPersistencia;
+//import java.util.Date;
 
 public class TestJPA {
     public static void main(String[] args) {

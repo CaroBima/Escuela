@@ -1,7 +1,10 @@
 package Logica;
 
+import Igu.AlumnoForm;
 import Persistencia.ControladoraPersistencia;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -22,4 +25,10 @@ public class Controladora {
     }
     
     
+    public List cargarLista(){
+        ControladoraPersistencia controlPer = new ControladoraPersistencia();
+        List<Alumno> lista = new ArrayList<Alumno>();
+        lista = controlPer.leerTodosLosAlumnos();
+        return lista;
+    }
 }

@@ -1,8 +1,11 @@
 package Igu;
 
+import Logica.Alumno;
 import Logica.Controladora;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -16,9 +19,43 @@ public class AlumnoForm extends javax.swing.JFrame {
         initComponents();
         jDateFechaNac.setDate(new Date());
         //jDateFechaNac.setDate(LocalDate.now());
+        this.cargarLista();
         
+      
     }
-
+   
+   
+   public void cargarLista(){
+        Controladora listaAlumnos = new Controladora();
+        List <Alumno> listaPersona = new ArrayList<Alumno>();
+        Alumno pers = new Alumno ();
+        listaPersona = listaAlumnos.cargarLista();
+        int cantidadAlumnos;
+        cantidadAlumnos = listaPersona.size();
+        System.out.println("Cantidad de alumnos: " + cantidadAlumnos);
+        //hasta ahi llega bien, obtiene la cantidad de alumnos
+        for(int fila = 0; fila <cantidadAlumnos; fila++){
+            pers = listaPersona.get(fila);
+            tblAlumnos.setValueAt(pers.getDni(), fila, 0);
+            tblAlumnos.setValueAt(pers.getNombre(), fila, 1);
+            tblAlumnos.setValueAt(pers.getApellido(), fila, 2);
+            tblAlumnos.setValueAt(pers.getFechaNac(), fila, 3);
+            System.out.println(pers.getNombre());
+            System.out.println("i: " + fila);
+            System.out.println(cantidadAlumnos);
+        }
+        
+        /*tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
+            listaPersona,
+            new String [] {
+                "Dni" , "Nombre", "Apellido", "Fecha Nacimiento"
+            }));
+        */
+        
+   }
+   
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +79,7 @@ public class AlumnoForm extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAlumnos = new javax.swing.JTable();
 
         jMenu1.setText("jMenu1");
 
@@ -117,10 +154,11 @@ public class AlumnoForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellido)
-                            .addComponent(btnLimpiar)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblApellido)
+                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,7 +167,7 @@ public class AlumnoForm extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -140,7 +178,7 @@ public class AlumnoForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblAlumnos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,6 +228,7 @@ public class AlumnoForm extends javax.swing.JFrame {
       apellido = txtApellido.getText();
       fechaNac = jDateFechaNac.getDate();
       control.agregarAlumno(dni, nombre, apellido, fechaNac);
+      this.cargarLista();
       this.limpiar();
       JOptionPane.showMessageDialog(null, "Alumno Guardado");
       
@@ -215,11 +254,11 @@ public class AlumnoForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblDni;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JTable tblAlumnos;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtNombre;

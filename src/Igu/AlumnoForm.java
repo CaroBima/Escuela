@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 public class AlumnoForm extends javax.swing.JFrame {
@@ -20,38 +21,32 @@ public class AlumnoForm extends javax.swing.JFrame {
         jDateFechaNac.setDate(new Date());
         //jDateFechaNac.setDate(LocalDate.now());
         this.cargarLista();
-        
-      
     }
    
-   
+   //carga la lista en el jtable
    public void cargarLista(){
+        DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();
         Controladora listaAlumnos = new Controladora();
         List <Alumno> listaPersona = new ArrayList<Alumno>();
         Alumno pers = new Alumno ();
         listaPersona = listaAlumnos.cargarLista();
         int cantidadAlumnos;
         cantidadAlumnos = listaPersona.size();
-        System.out.println("Cantidad de alumnos: " + cantidadAlumnos);
-        //hasta ahi llega bien, obtiene la cantidad de alumnos
+        //cargo los datos en la jtable:
         for(int fila = 0; fila <cantidadAlumnos; fila++){
             pers = listaPersona.get(fila);
-            tblAlumnos.setValueAt(pers.getDni(), fila, 0);
-            tblAlumnos.setValueAt(pers.getNombre(), fila, 1);
-            tblAlumnos.setValueAt(pers.getApellido(), fila, 2);
-            tblAlumnos.setValueAt(pers.getFechaNac(), fila, 3);
+            modelo.addRow(new Object[]{pers.getDni(),pers.getNombre(),pers.getApellido(),pers.getFechaNac()});
+            
+            /*
+            modelo.setValueAt(pers.getDni(), fila, 0);
+            modelo.setValueAt(pers.getNombre(), fila, 1);
+            modelo.setValueAt(pers.getApellido(), fila, 2);
+            modelo.setValueAt(pers.getFechaNac(), fila, 3);
             System.out.println(pers.getNombre());
             System.out.println("i: " + fila);
             System.out.println(cantidadAlumnos);
-        }
-        
-        /*tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
-            listaPersona,
-            new String [] {
-                "Dni" , "Nombre", "Apellido", "Fecha Nacimiento"
-            }));
-        */
-        
+            */
+        }  
    }
    
     
@@ -169,13 +164,10 @@ public class AlumnoForm extends javax.swing.JFrame {
 
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Dni", "Nombre", "Apellido", "Fecha Nac"
             }
         ));
         jScrollPane2.setViewportView(tblAlumnos);
@@ -193,7 +185,7 @@ public class AlumnoForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGap(0, 40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,6 +212,7 @@ public class AlumnoForm extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
       Controladora control = new Controladora();
+      DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();
       String dni, nombre, apellido;
       Date fechaNac;
            
@@ -228,7 +221,7 @@ public class AlumnoForm extends javax.swing.JFrame {
       apellido = txtApellido.getText();
       fechaNac = jDateFechaNac.getDate();
       control.agregarAlumno(dni, nombre, apellido, fechaNac);
-      this.cargarLista();
+      modelo.addRow(new Object[]{dni,nombre ,apellido ,fechaNac});
       this.limpiar();
       JOptionPane.showMessageDialog(null, "Alumno Guardado");
       
